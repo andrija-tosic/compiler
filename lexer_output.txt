@@ -1,0 +1,738 @@
+line: 1 col: 1 match: --main--
+action [60] { return getKW(); }
+Text : main
+index : 1
+line : 0
+cBeg. : 0
+line: 1 col: 5 match: --(--
+action [43] { return new Yytoken( sym.LEFTPAR, yytext(), yyline, yycolumn ); }
+Text : (
+index : 13
+line : 0
+cBeg. : 4
+line: 1 col: 6 match: --)--
+action [44] { return new Yytoken( sym.RIGHTPAR, yytext(), yyline, yycolumn ); }
+Text : )
+index : 14
+line : 0
+cBeg. : 5
+line: 1 col: 7 match: -- --
+action [42] { ; }
+line: 1 col: 8 match: --{--
+action [56] { return new Yytoken( sym.LEFTBRACKET, yytext(), yyline, yycolumn ); }
+Text : {
+index : 5
+line : 0
+cBeg. : 7
+line: 1 col: 9 match: --\u000D--
+action [42] { ; }
+line: 1 col: 1 match: --\u000A--
+action [42] { ; }
+line: 2 col: 1 match: -- --
+action [42] { ; }
+line: 2 col: 2 match: -- --
+action [42] { ; }
+line: 2 col: 3 match: -- --
+action [42] { ; }
+line: 2 col: 4 match: -- --
+action [42] { ; }
+line: 2 col: 5 match: --int--
+action [60] { return getKW(); }
+Text : int
+index : 2
+line : 1
+cBeg. : 4
+line: 2 col: 8 match: -- --
+action [42] { ; }
+line: 2 col: 9 match: --a--
+action [60] { return getKW(); }
+Text : a
+index : 7
+line : 1
+cBeg. : 8
+line: 2 col: 10 match: --,--
+action [54] { return new Yytoken( sym.COMMA, yytext(), yyline, yycolumn ); }
+Text : ,
+index : 17
+line : 1
+cBeg. : 9
+line: 2 col: 11 match: -- --
+action [42] { ; }
+line: 2 col: 12 match: --b--
+action [60] { return getKW(); }
+Text : b
+index : 7
+line : 1
+cBeg. : 11
+line: 2 col: 13 match: --,--
+action [54] { return new Yytoken( sym.COMMA, yytext(), yyline, yycolumn ); }
+Text : ,
+index : 17
+line : 1
+cBeg. : 12
+line: 2 col: 14 match: -- --
+action [42] { ; }
+line: 2 col: 15 match: --c--
+action [60] { return getKW(); }
+Text : c
+index : 7
+line : 1
+cBeg. : 14
+line: 2 col: 16 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 1
+cBeg. : 15
+line: 2 col: 17 match: --\u000D--
+action [42] { ; }
+line: 2 col: 1 match: --\u000A--
+action [42] { ; }
+line: 3 col: 1 match: -- --
+action [42] { ; }
+line: 3 col: 2 match: -- --
+action [42] { ; }
+line: 3 col: 3 match: -- --
+action [42] { ; }
+line: 3 col: 4 match: -- --
+action [42] { ; }
+line: 3 col: 5 match: --char--
+action [60] { return getKW(); }
+Text : char
+index : 3
+line : 2
+cBeg. : 4
+line: 3 col: 9 match: -- --
+action [42] { ; }
+line: 3 col: 10 match: --a1--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : a1
+index : 7
+line : 2
+cBeg. : 9
+line: 3 col: 12 match: --,--
+action [54] { return new Yytoken( sym.COMMA, yytext(), yyline, yycolumn ); }
+Text : ,
+index : 17
+line : 2
+cBeg. : 11
+line: 3 col: 13 match: -- --
+action [42] { ; }
+line: 3 col: 14 match: --_b2--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : _b2
+index : 7
+line : 2
+cBeg. : 13
+line: 3 col: 17 match: --,--
+action [54] { return new Yytoken( sym.COMMA, yytext(), yyline, yycolumn ); }
+Text : ,
+index : 17
+line : 2
+cBeg. : 16
+line: 3 col: 18 match: -- --
+action [42] { ; }
+line: 3 col: 19 match: --c3_--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : c3_
+index : 7
+line : 2
+cBeg. : 18
+line: 3 col: 22 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 2
+cBeg. : 21
+line: 3 col: 23 match: --\u000D--
+action [42] { ; }
+line: 3 col: 1 match: --\u000A--
+action [42] { ; }
+line: 4 col: 1 match: -- --
+action [42] { ; }
+line: 4 col: 2 match: -- --
+action [42] { ; }
+line: 4 col: 3 match: -- --
+action [42] { ; }
+line: 4 col: 4 match: -- --
+action [42] { ; }
+line: 4 col: 5 match: --float--
+action [60] { return getKW(); }
+Text : float
+index : 4
+line : 3
+cBeg. : 4
+line: 4 col: 10 match: -- --
+action [42] { ; }
+line: 4 col: 11 match: --x1--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : x1
+index : 7
+line : 3
+cBeg. : 10
+line: 4 col: 13 match: --,--
+action [54] { return new Yytoken( sym.COMMA, yytext(), yyline, yycolumn ); }
+Text : ,
+index : 17
+line : 3
+cBeg. : 12
+line: 4 col: 14 match: -- --
+action [42] { ; }
+line: 4 col: 15 match: --y2--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : y2
+index : 7
+line : 3
+cBeg. : 14
+line: 4 col: 17 match: --,--
+action [54] { return new Yytoken( sym.COMMA, yytext(), yyline, yycolumn ); }
+Text : ,
+index : 17
+line : 3
+cBeg. : 16
+line: 4 col: 18 match: -- --
+action [42] { ; }
+line: 4 col: 19 match: --z3--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : z3
+index : 7
+line : 3
+cBeg. : 18
+line: 4 col: 21 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 3
+cBeg. : 20
+line: 4 col: 22 match: --\u000D--
+action [42] { ; }
+line: 4 col: 1 match: --\u000A--
+action [42] { ; }
+line: 5 col: 1 match: --\u000D--
+action [42] { ; }
+line: 5 col: 1 match: --\u000A--
+action [42] { ; }
+line: 6 col: 1 match: -- --
+action [42] { ; }
+line: 6 col: 2 match: -- --
+action [42] { ; }
+line: 6 col: 3 match: -- --
+action [42] { ; }
+line: 6 col: 4 match: -- --
+action [42] { ; }
+line: 6 col: 5 match: --int--
+action [60] { return getKW(); }
+Text : int
+index : 2
+line : 5
+cBeg. : 4
+line: 6 col: 8 match: -- --
+action [42] { ; }
+line: 6 col: 9 match: --br--
+action [60] { return getKW(); }
+Text : br
+index : 7
+line : 5
+cBeg. : 8
+line: 6 col: 11 match: -- --
+action [42] { ; }
+line: 6 col: 12 match: --=--
+action [55] { return new Yytoken( sym.ASSIGN, yytext(), yyline, yycolumn ); }
+Text : =
+index : 15
+line : 5
+cBeg. : 11
+line: 6 col: 13 match: -- --
+action [42] { ; }
+line: 6 col: 14 match: --0hex123ABCDEF--
+action [76] { return new Yytoken( sym.CONST, yytext(), yyline, yycolumn ); }
+Text : 0hex123ABCDEF
+index : 8
+line : 5
+cBeg. : 13
+line: 6 col: 27 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 5
+cBeg. : 26
+line: 6 col: 28 match: --\u000D--
+action [42] { ; }
+line: 6 col: 1 match: --\u000A--
+action [42] { ; }
+line: 7 col: 1 match: --\u000D--
+action [42] { ; }
+line: 7 col: 1 match: --\u000A--
+action [42] { ; }
+line: 8 col: 1 match: -- --
+action [42] { ; }
+line: 8 col: 2 match: -- --
+action [42] { ; }
+line: 8 col: 3 match: -- --
+action [42] { ; }
+line: 8 col: 4 match: -- --
+action [42] { ; }
+line: 8 col: 5 match: --int--
+action [60] { return getKW(); }
+Text : int
+index : 2
+line : 7
+cBeg. : 4
+line: 8 col: 8 match: -- --
+action [42] { ; }
+line: 8 col: 9 match: --u--
+action [60] { return getKW(); }
+Text : u
+index : 7
+line : 7
+cBeg. : 8
+line: 8 col: 10 match: -- --
+action [42] { ; }
+line: 8 col: 11 match: --=--
+action [55] { return new Yytoken( sym.ASSIGN, yytext(), yyline, yycolumn ); }
+Text : =
+index : 15
+line : 7
+cBeg. : 10
+line: 8 col: 12 match: -- --
+action [42] { ; }
+line: 8 col: 13 match: --0oct1267--
+action [76] { return new Yytoken( sym.CONST, yytext(), yyline, yycolumn ); }
+Text : 0oct1267
+index : 8
+line : 7
+cBeg. : 12
+line: 8 col: 21 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 7
+cBeg. : 20
+line: 8 col: 22 match: --\u000D--
+action [42] { ; }
+line: 8 col: 1 match: --\u000A--
+action [42] { ; }
+line: 9 col: 1 match: --\u000D--
+action [42] { ; }
+line: 9 col: 1 match: --\u000A--
+action [42] { ; }
+line: 10 col: 1 match: -- --
+action [42] { ; }
+line: 10 col: 2 match: -- --
+action [42] { ; }
+line: 10 col: 3 match: -- --
+action [42] { ; }
+line: 10 col: 4 match: -- --
+action [42] { ; }
+line: 10 col: 5 match: --%%--
+action [39] { yybegin( KOMENTAR ); }
+line: 10 col: 7 match: -- Komentar pred case statement %%--
+action [40] { yybegin( YYINITIAL ); }
+line: 10 col: 39 match: --\u000D--
+action [42] { ; }
+line: 10 col: 1 match: --\u000A--
+action [42] { ; }
+line: 11 col: 1 match: --\u000D--
+action [42] { ; }
+line: 11 col: 1 match: --\u000A--
+action [42] { ; }
+line: 12 col: 1 match: -- --
+action [42] { ; }
+line: 12 col: 2 match: -- --
+action [42] { ; }
+line: 12 col: 3 match: -- --
+action [42] { ; }
+line: 12 col: 4 match: -- --
+action [42] { ; }
+line: 12 col: 5 match: --case--
+action [60] { return getKW(); }
+Text : case
+index : 11
+line : 11
+cBeg. : 4
+line: 12 col: 9 match: -- --
+action [42] { ; }
+line: 12 col: 10 match: --(--
+action [43] { return new Yytoken( sym.LEFTPAR, yytext(), yyline, yycolumn ); }
+Text : (
+index : 13
+line : 11
+cBeg. : 9
+line: 12 col: 11 match: --a--
+action [60] { return getKW(); }
+Text : a
+index : 7
+line : 11
+cBeg. : 10
+line: 12 col: 12 match: --)--
+action [44] { return new Yytoken( sym.RIGHTPAR, yytext(), yyline, yycolumn ); }
+Text : )
+index : 14
+line : 11
+cBeg. : 11
+line: 12 col: 13 match: -- --
+action [42] { ; }
+line: 12 col: 14 match: --{--
+action [56] { return new Yytoken( sym.LEFTBRACKET, yytext(), yyline, yycolumn ); }
+Text : {
+index : 5
+line : 11
+cBeg. : 13
+line: 12 col: 15 match: --\u000D--
+action [42] { ; }
+line: 12 col: 1 match: --\u000A--
+action [42] { ; }
+line: 13 col: 1 match: -- --
+action [42] { ; }
+line: 13 col: 2 match: -- --
+action [42] { ; }
+line: 13 col: 3 match: -- --
+action [42] { ; }
+line: 13 col: 4 match: -- --
+action [42] { ; }
+line: 13 col: 5 match: -- --
+action [42] { ; }
+line: 13 col: 6 match: -- --
+action [42] { ; }
+line: 13 col: 7 match: -- --
+action [42] { ; }
+line: 13 col: 8 match: -- --
+action [42] { ; }
+line: 13 col: 9 match: --when--
+action [60] { return getKW(); }
+Text : when
+index : 12
+line : 12
+cBeg. : 8
+line: 13 col: 13 match: -- --
+action [42] { ; }
+line: 13 col: 14 match: --1--
+action [76] { return new Yytoken( sym.CONST, yytext(), yyline, yycolumn ); }
+Text : 1
+index : 8
+line : 12
+cBeg. : 13
+line: 13 col: 15 match: --:--
+action [53] { return new Yytoken( sym.COLON, yytext(), yyline, yycolumn ); }
+Text : :
+index : 18
+line : 12
+cBeg. : 14
+line: 13 col: 16 match: -- --
+action [42] { ; }
+line: 13 col: 17 match: --br--
+action [60] { return getKW(); }
+Text : br
+index : 7
+line : 12
+cBeg. : 16
+line: 13 col: 19 match: -- --
+action [42] { ; }
+line: 13 col: 20 match: --=--
+action [55] { return new Yytoken( sym.ASSIGN, yytext(), yyline, yycolumn ); }
+Text : =
+index : 15
+line : 12
+cBeg. : 19
+line: 13 col: 21 match: -- --
+action [42] { ; }
+line: 13 col: 22 match: --0dec10--
+action [76] { return new Yytoken( sym.CONST, yytext(), yyline, yycolumn ); }
+Text : 0dec10
+index : 8
+line : 12
+cBeg. : 21
+line: 13 col: 28 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 12
+cBeg. : 27
+line: 13 col: 29 match: --\u000D--
+action [42] { ; }
+line: 13 col: 1 match: --\u000A--
+action [42] { ; }
+line: 14 col: 1 match: -- --
+action [42] { ; }
+line: 14 col: 2 match: -- --
+action [42] { ; }
+line: 14 col: 3 match: -- --
+action [42] { ; }
+line: 14 col: 4 match: -- --
+action [42] { ; }
+line: 14 col: 5 match: -- --
+action [42] { ; }
+line: 14 col: 6 match: -- --
+action [42] { ; }
+line: 14 col: 7 match: -- --
+action [42] { ; }
+line: 14 col: 8 match: -- --
+action [42] { ; }
+line: 14 col: 9 match: --when--
+action [60] { return getKW(); }
+Text : when
+index : 12
+line : 13
+cBeg. : 8
+line: 14 col: 13 match: -- --
+action [42] { ; }
+line: 14 col: 14 match: --2.3--
+action [76] { return new Yytoken( sym.CONST, yytext(), yyline, yycolumn ); }
+Text : 2.3
+index : 8
+line : 13
+cBeg. : 13
+line: 14 col: 17 match: --:--
+action [53] { return new Yytoken( sym.COLON, yytext(), yyline, yycolumn ); }
+Text : :
+index : 18
+line : 13
+cBeg. : 16
+line: 14 col: 18 match: -- --
+action [42] { ; }
+line: 14 col: 19 match: --br--
+action [60] { return getKW(); }
+Text : br
+index : 7
+line : 13
+cBeg. : 18
+line: 14 col: 21 match: -- --
+action [42] { ; }
+line: 14 col: 22 match: --=--
+action [55] { return new Yytoken( sym.ASSIGN, yytext(), yyline, yycolumn ); }
+Text : =
+index : 15
+line : 13
+cBeg. : 21
+line: 14 col: 23 match: -- --
+action [42] { ; }
+line: 14 col: 24 match: --100--
+action [76] { return new Yytoken( sym.CONST, yytext(), yyline, yycolumn ); }
+Text : 100
+index : 8
+line : 13
+cBeg. : 23
+line: 14 col: 27 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 13
+cBeg. : 26
+line: 14 col: 28 match: --\u000D--
+action [42] { ; }
+line: 14 col: 1 match: --\u000A--
+action [42] { ; }
+line: 15 col: 1 match: -- --
+action [42] { ; }
+line: 15 col: 2 match: -- --
+action [42] { ; }
+line: 15 col: 3 match: -- --
+action [42] { ; }
+line: 15 col: 4 match: -- --
+action [42] { ; }
+line: 15 col: 5 match: -- --
+action [42] { ; }
+line: 15 col: 6 match: -- --
+action [42] { ; }
+line: 15 col: 7 match: -- --
+action [42] { ; }
+line: 15 col: 8 match: -- --
+action [42] { ; }
+line: 15 col: 9 match: --when--
+action [60] { return getKW(); }
+Text : when
+index : 12
+line : 14
+cBeg. : 8
+line: 15 col: 13 match: -- --
+action [42] { ; }
+line: 15 col: 14 match: --'c'--
+action [82] { return new Yytoken( sym.CONST,yytext(), yyline, yycolumn ); }
+Text : 'c'
+index : 8
+line : 14
+cBeg. : 13
+line: 15 col: 17 match: --:--
+action [53] { return new Yytoken( sym.COLON, yytext(), yyline, yycolumn ); }
+Text : :
+index : 18
+line : 14
+cBeg. : 16
+line: 15 col: 18 match: -- --
+action [42] { ; }
+line: 15 col: 19 match: --br--
+action [60] { return getKW(); }
+Text : br
+index : 7
+line : 14
+cBeg. : 18
+line: 15 col: 21 match: -- --
+action [42] { ; }
+line: 15 col: 22 match: --=--
+action [55] { return new Yytoken( sym.ASSIGN, yytext(), yyline, yycolumn ); }
+Text : =
+index : 15
+line : 14
+cBeg. : 21
+line: 15 col: 23 match: -- --
+action [42] { ; }
+line: 15 col: 24 match: --1000--
+action [76] { return new Yytoken( sym.CONST, yytext(), yyline, yycolumn ); }
+Text : 1000
+index : 8
+line : 14
+cBeg. : 23
+line: 15 col: 28 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 14
+cBeg. : 27
+line: 15 col: 29 match: --\u000D--
+action [42] { ; }
+line: 15 col: 1 match: --\u000A--
+action [42] { ; }
+line: 16 col: 1 match: -- --
+action [42] { ; }
+line: 16 col: 2 match: -- --
+action [42] { ; }
+line: 16 col: 3 match: -- --
+action [42] { ; }
+line: 16 col: 4 match: -- --
+action [42] { ; }
+line: 16 col: 5 match: --}--
+action [57] { return new Yytoken( sym.RIGHTBRACKET, yytext(), yyline, yycolumn ); }
+Text : }
+index : 6
+line : 15
+cBeg. : 4
+line: 16 col: 6 match: --\u000D--
+action [42] { ; }
+line: 16 col: 1 match: --\u000A--
+action [42] { ; }
+line: 17 col: 1 match: --\u000D--
+action [42] { ; }
+line: 17 col: 1 match: --\u000A--
+action [42] { ; }
+line: 18 col: 1 match: -- --
+action [42] { ; }
+line: 18 col: 2 match: -- --
+action [42] { ; }
+line: 18 col: 3 match: -- --
+action [42] { ; }
+line: 18 col: 4 match: -- --
+action [42] { ; }
+line: 18 col: 5 match: --a--
+action [60] { return getKW(); }
+Text : a
+index : 7
+line : 17
+cBeg. : 4
+line: 18 col: 6 match: -- --
+action [42] { ; }
+line: 18 col: 7 match: --=--
+action [55] { return new Yytoken( sym.ASSIGN, yytext(), yyline, yycolumn ); }
+Text : =
+index : 15
+line : 17
+cBeg. : 6
+line: 18 col: 8 match: -- --
+action [42] { ; }
+line: 18 col: 9 match: --b--
+action [60] { return getKW(); }
+Text : b
+index : 7
+line : 17
+cBeg. : 8
+line: 18 col: 10 match: -- --
+action [42] { ; }
+line: 18 col: 11 match: --+--
+action [48] { return new Yytoken( sym.PLUS, yytext(), yyline, yycolumn ); }
+Text : +
+index : 9
+line : 17
+cBeg. : 10
+line: 18 col: 12 match: -- --
+action [42] { ; }
+line: 18 col: 13 match: --c--
+action [60] { return getKW(); }
+Text : c
+index : 7
+line : 17
+cBeg. : 12
+line: 18 col: 14 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 17
+cBeg. : 13
+line: 18 col: 15 match: --\u000D--
+action [42] { ; }
+line: 18 col: 1 match: --\u000A--
+action [42] { ; }
+line: 19 col: 1 match: -- --
+action [42] { ; }
+line: 19 col: 2 match: -- --
+action [42] { ; }
+line: 19 col: 3 match: -- --
+action [42] { ; }
+line: 19 col: 4 match: -- --
+action [42] { ; }
+line: 19 col: 5 match: --a1--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : a1
+index : 7
+line : 18
+cBeg. : 4
+line: 19 col: 7 match: -- --
+action [42] { ; }
+line: 19 col: 8 match: --=--
+action [55] { return new Yytoken( sym.ASSIGN, yytext(), yyline, yycolumn ); }
+Text : =
+index : 15
+line : 18
+cBeg. : 7
+line: 19 col: 9 match: -- --
+action [42] { ; }
+line: 19 col: 10 match: --b2--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : b2
+index : 7
+line : 18
+cBeg. : 9
+line: 19 col: 12 match: -- --
+action [42] { ; }
+line: 19 col: 13 match: -----
+action [49] { return new Yytoken( sym.MINUS, yytext(), yyline, yycolumn ); }
+Text : -
+index : 10
+line : 18
+cBeg. : 12
+line: 19 col: 14 match: -- --
+action [42] { ; }
+line: 19 col: 15 match: --c3--
+action [63] { return new Yytoken(sym.ID, yytext(),yyline, yycolumn ); }
+Text : c3
+index : 7
+line : 18
+cBeg. : 14
+line: 19 col: 17 match: --;--
+action [52] { return new Yytoken( sym.SEMICOLON, yytext(), yyline, yycolumn ); }
+Text : ;
+index : 16
+line : 18
+cBeg. : 16
+line: 19 col: 18 match: --\u000D--
+action [42] { ; }
+line: 19 col: 1 match: --\u000A--
+action [42] { ; }
+line: 20 col: 1 match: --}--
+action [57] { return new Yytoken( sym.RIGHTBRACKET, yytext(), yyline, yycolumn ); }
+Text : }
+index : 6
+line : 19
+cBeg. : 0
+Text : null
+index : 0
+line : 19
+cBeg. : 1
