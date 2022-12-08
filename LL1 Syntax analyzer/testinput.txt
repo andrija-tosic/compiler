@@ -1,0 +1,5 @@
+case (a) {
+    when 1: br = 0dec10;
+    when 2.3: br = 100;
+    when 'c': br = 1000;
+}
