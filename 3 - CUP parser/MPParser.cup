@@ -5,9 +5,8 @@ import java.io.*;
 
 parser code {:
    public static void main( String[] args ) {
-		String in="D:\\Desktop\\compiler\\3 - CUP parser\\testinput.txt";
       try {
-		   FileReader file = new FileReader(in);
+		   FileReader file = new FileReader(args[0]);
 		   Scanner scanner = new MPLexer( file );
 		   MPParser parser = new MPParser( scanner );
 		   parser.parse();
@@ -42,124 +41,131 @@ non terminal Term;
 non terminal AddOperator;
 
 // Prioritet i asocijativnost operatora
-precedence left LEFTBRACKET, RIGHTBRACKET;
-precedence left LEFTPAR, RIGHTPAR;
-precedence left PLUS, MINUS;
+// precedence left LEFTBRACKET, RIGHTBRACKET;
+// precedence left LEFTPAR, RIGHTPAR;
+// precedence left PLUS, MINUS;
+// precedence left INT, ID;
+// precedence left FLOAT, ID;
+// precedence left CHAR, ID;
+// precedence left ID, SEMICOLON;
+// precedence left COMMA, SEMICOLON;
 
 // Gramatika
-Program ::= MAIN LEFTPAR RIGHTPAR Block 
+Program ::= MAIN LEFTPAR RIGHTPAR Block
 			{:
-               System.out.println( "Program -> main ( ) Block" );
-            :};
+            System.out.println( "Program -> main ( ) Block" );
+         :};
+
 
 Block ::= LEFTBRACKET Declarations StatementList RIGHTBRACKET
 			{:
-               System.out.println( "Block -> { Declarations StatementList }" );
-            :};
+            System.out.println( "Block -> { Declarations StatementList }" );
+         :};
 
 Declarations ::= Declarations VarDecl
 			{:
                System.out.println( "Declarations -> Declarations VarDecl" );
-            :}
-         | {:
+         :}
+         |
+         {:
                System.out.println( "Declarations -> ε" );
-            :};
+         :};
 
 VarDecl ::= Type NameList SEMICOLON
 			{:
                System.out.println( "VarDecl -> Type NameList ;" );
-            :};
+         :};
 
 NameList ::= ID
-			{:
-               System.out.println( "NameList -> ID" );
-            :}
-		| NameList COMMA ID
-			{:
-               System.out.println( "NameList -> NameList , ID" );
-            :};
+		   {:
+            System.out.println( "NameList -> ID" );
+         :}
+         | NameList COMMA ID
+         {:
+            System.out.println( "NameList -> NameList , ID" );
+         :};
 
 Type ::= INT
-			{:
-               System.out.println( "Type -> int" );
-            :}
+		{:
+         System.out.println( "Type -> int" );
+      :}
 		| CHAR
-			{:
-               System.out.println( "Type -> char" );
-            :}
+		{:
+         System.out.println( "Type -> char" );
+      :}
       | FLOAT
       {:
-               System.out.println( "Type -> float" );
-            :};
+         System.out.println( "Type -> float" );
+      :};
 
 StatementList ::= StatementList Statement
-			{:
-               System.out.println( "StatementList -> StatementList Statement" );
-            :}
+		{:
+         System.out.println( "StatementList -> StatementList Statement" );
+      :}
 		| Statement
-			{:
-               System.out.println( "StatementList -> Statement" );
-            :};
+		{:
+         System.out.println( "StatementList -> Statement" );
+      :};
 
 Statement ::= CaseStatement
-			{:
-               System.out.println( "Statement -> CaseStatement" );
-            :}
+		{:
+         System.out.println( "Statement -> CaseStatement" );
+      :}
       | ID ASSIGN Expression SEMICOLON
       {:
-               System.out.println( "Statement -> ID = Expression ;" );
-            :}
+         System.out.println( "Statement -> ID = Expression ;" );
+      :}
       | Block
       {:
-               System.out.println( "Statement -> Block" );
-            :};
+         System.out.println( "Statement -> Block" );
+      :};
 
 CaseStatement ::= CASE LEFTPAR Expression RIGHTPAR LEFTBRACKET WhenStatementList RIGHTBRACKET
-			{:
-               System.out.println( "CaseStatement -> case ( Expression ) { WhenStatementList }" );
-            :};
+   {:
+      System.out.println( "CaseStatement -> case ( Expression ) { WhenStatementList }" );
+   :};
 
 WhenStatementList ::= WhenStatementList WhenStatement
-			{:
-               System.out.println( "WhenStatementList -> WhenStatementList WhenStatement" );
-            :}
-		| WhenStatement
-			{:
-               System.out.println( "WhenStatementList -> WhenStatement" );
-            :};
+	{:
+      System.out.println( "WhenStatementList -> WhenStatementList WhenStatement" );
+   :}
+	| WhenStatement
+	{:
+      System.out.println( "WhenStatementList -> WhenStatement" );
+   :};
 
 WhenStatement ::= WHEN CONST COLON Statement
-			{:
-               System.out.println( "WhenStatement -> when CONST : Statement" );
-            :};
+	{:
+      System.out.println( "WhenStatement -> when CONST : Statement" );
+   :};
 
 Expression ::= Expression AddOperator Term
-			{:
-               System.out.println( "Expression -> Expression AddOperator Term" );
-            :}
-      | Term
-      {:
-               System.out.println( "Expression -> Term" );
-            :};
+	{:
+      System.out.println( "Expression -> Expression AddOperator Term" );
+   :}
+   | Term
+   {:
+      System.out.println( "Expression -> Term" );
+   :};
 
 AddOperator ::= PLUS
-         {:
-               System.out.println( "AddOperator -> +" );
-            :}
-      | MINUS
-      {:
-               System.out.println( "AddOperator -> -" );
-            :};
+   {:
+      System.out.println( "AddOperator -> +" );
+   :}
+   | MINUS
+   {:
+      System.out.println( "AddOperator -> -" );
+   :};
 
 Term ::= ID
-      {:
-               System.out.println( "Term -> ID" );
-            :}
-      | CONST
-      {:
-               System.out.println( "Term -> CONST" );
-            :}
-      | LEFTPAR Expression RIGHTPAR
-      {:
-               System.out.println( "Term -> ( Expression )" );
-            :};
+   {:
+      System.out.println( "Term -> ID" );
+   :}
+   | CONST
+   {:
+      System.out.println( "Term -> CONST" );
+   :}
+   | LEFTPAR Expression RIGHTPAR
+   {:
+      System.out.println( "Term -> ( Expression )" );
+   :};

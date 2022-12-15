@@ -3,13 +3,15 @@ main() {
     char a1, _b2, c3_;
     float x1, y2, z3;
 
-    a = b + ;
+    %% dodela na z odmah uzrokuje gresku %%
 
-    int br = 0hex123ABCDEF;
+    char z;
 
-    int u = 0oct1267;
+    br = 0hex123ABCDEF;
 
-    %% Komentar pred case statement %%
+    u = 0oct1267;
+
+    %% izostavljanje izraza iz case uzrokuje gresku %%
 
     case (a) {
         when 1: br = 0dec10;

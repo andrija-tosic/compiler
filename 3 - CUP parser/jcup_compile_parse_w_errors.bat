@@ -10,4 +10,6 @@ REM ********   POZIV JAVA CUP APLIKACIJE  ***********
 echo vrednost : %JCUP_HOME%
 %JAVA_HOME%\bin\java -classpath %JCUP_HOME% java_cup.Main -parser %PARSER_CLASS_NAME% -symbols sym < %CUP_SPEC_NAME%
 
-PAUSE
+javac -classpath ./jcup_runtime.jar -sourcepath . .\MPParserWErrors.java
+java MPParserWErrors ./test_input_w_errors.txt > parser_w_errors_output.txt
+
