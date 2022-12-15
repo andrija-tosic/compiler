@@ -1,0 +1,80 @@
+main
+Separator (
+Separator )
+Separator {
+int
+Declarations -> ε
+Type -> int
+Separator ,
+NameList -> ID
+Separator ,
+NameList -> NameList , ID
+Separator ;
+NameList -> NameList , ID
+char
+VarDecl -> Type NameList ;
+Declarations -> Declarations VarDecl
+Type -> char
+Separator ,
+NameList -> ID
+Separator ,
+NameList -> NameList , ID
+Separator ;
+NameList -> NameList , ID
+float
+VarDecl -> Type NameList ;
+Declarations -> Declarations VarDecl
+Type -> float
+Separator ,
+NameList -> ID
+Separator ,
+NameList -> NameList , ID
+Separator ;
+NameList -> NameList , ID
+VarDecl -> Type NameList ;
+Declarations -> Declarations VarDecl
+Separator =
+Plus
+Term -> ID
+Expression -> Term
+Separator ;
+int
+Separator =
+Hex
+Separator ;
+int
+Separator =
+Oct
+Separator ;
+case
+Separator (
+Separator )
+Separator {
+when
+Dec
+Separator :
+Separator =
+Dec
+Separator ;
+when
+Float
+Separator :
+Separator =
+Dec
+Separator ;
+when
+char
+Separator :
+Separator =
+Dec
+Separator ;
+Separator }
+Separator =
+Plus
+Separator ;
+Separator =
+Minus
+Separator ;
+Separator }
+Missing block in main program
+Syntax analysis done. Error count: 1

@@ -1,0 +1,297 @@
+// import sekcija
+
+import java_cup.runtime.*;
+import java.io.*;
+
+parser code {:
+   public int errCount = 0;
+   public static void main( String[] args ) {
+		String in="D:\\Desktop\\compiler\\3 - CUP parser\\testinput_w_errors.txt";
+      try {
+		   FileReader file = new FileReader(in);
+		   Scanner scanner = new MPLexer( file );
+		   MPParserWErrors parser = new MPParserWErrors( scanner );
+		   parser.parse();
+	  		if (parser.errCount == 0)
+				System.out.println("Syntax analysis done. No errors encountered.");
+			else
+				System.out.println("Syntax analysis done. Error count: " + parser.errCount);
+   }
+	  catch( Exception e )
+	  {
+		   e.printStackTrace();
+	  }
+   }
+   public void syntax_error(Symbol cur_token) {
+   	  
+   }
+   
+   public void report_error(String message, Object info) {
+   	   System.out.print( message );
+   }
+   
+   public int getLine() {
+   	  return (( MPLexer) getScanner()).getLine();
+   }
+:};
+
+
+// Terminali
+terminal MAIN, LEFTPAR, RIGHTPAR, LEFTBRACKET, RIGHTBRACKET, SEMICOLON, CASE;
+terminal ID, COMMA, INT, CHAR, FLOAT, ASSIGN, WHEN, CONST, COLON, PLUS, MINUS;
+
+// Neterminali
+non terminal Program;
+non terminal Block;
+non terminal Declarations;
+non terminal StatementList;
+non terminal VarDecl;
+non terminal Type;
+non terminal NameList;
+non terminal Statement;
+non terminal CaseStatement;
+non terminal Expression;
+non terminal WhenStatementList;
+non terminal WhenStatement;
+non terminal Term;
+non terminal AddOperator;
+
+// Prioritet i asocijativnost operatora
+precedence left LEFTBRACKET, RIGHTBRACKET;
+precedence left LEFTPAR, RIGHTPAR;
+precedence left PLUS, MINUS;
+ 
+// Gramatika
+Program ::= MAIN LEFTPAR RIGHTPAR Block
+			{:
+            System.out.println( "Program -> main ( ) Block" );
+         :}
+         | MAIN LEFTPAR RIGHTPAR error
+         {:
+            System.out.println("Missing block in main program");
+            parser.errCount++;
+         :}
+         | MAIN LEFTPAR error
+         {:
+            System.out.println("Missing ) after main");
+            parser.errCount++;
+         :}
+         | MAIN error
+         {:
+            System.out.println("Missing ( after main");
+            parser.errCount++;
+         :}
+         | error
+         {:
+            System.out.println("Missing main at start of program");
+            parser.errCount++;
+         :};
+
+
+Block ::= LEFTBRACKET Declarations StatementList RIGHTBRACKET
+			{:
+            System.out.println( "Block -> { Declarations StatementList }" );
+         :};
+         // | LEFTBRACKET Declarations StatementList error
+         // {:
+         //    System.out.println("Missing } at end of block");
+         //    parser.errCount++;
+         // :}
+         // | LEFTBRACKET Declarations error
+         // {:
+         //    System.out.println("Missing statements inside block");
+         //    parser.errCount++;
+         // :}
+         // | LEFTBRACKET error
+         // {:
+         //    System.out.println("Missing declarations inside block");
+         //    parser.errCount++;
+         // :}
+         // | error
+         // {:
+         //    System.out.println("Missing { at start of block");
+         //    parser.errCount++;
+         // :};
+
+Declarations ::= Declarations VarDecl
+			{:
+               System.out.println( "Declarations -> Declarations VarDecl" );
+         :}
+         |
+         {:
+               System.out.println( "Declarations -> ε" );
+         :};
+
+VarDecl ::= Type NameList SEMICOLON
+			{:
+               System.out.println( "VarDecl -> Type NameList ;" );
+         :}
+         | Type NameList error
+         {:
+            System.out.println("Missing ; after variable declaration");
+            parser.errCount++;
+         :};
+
+NameList ::= ID
+		   {:
+            System.out.println( "NameList -> ID" );
+         :}
+         | NameList COMMA ID
+         {:
+            System.out.println( "NameList -> NameList , ID" );
+         :};
+         // | NameList COMMA error
+         // {:
+         //    System.out.println("Missing identificator in name list enumeration");
+         //    parser.errCount++;
+         // :}
+         // | NameList error
+         // {:
+         //    System.out.println("Missing , after name list");
+         //    parser.errCount++;
+         // :}
+         // | error
+         // {:
+         //    System.out.println("Missing identificator in name list");
+         //    parser.errCount++;
+         // :};
+
+Type ::= INT
+			{:
+               System.out.println( "Type -> int" );
+         :}
+		| CHAR
+			{:
+               System.out.println( "Type -> char" );
+            :}
+      | FLOAT
+      {:
+               System.out.println( "Type -> float" );
+      :};
+
+StatementList ::= StatementList Statement
+			{:
+               System.out.println( "StatementList -> StatementList Statement" );
+         :}
+		| Statement
+			{:
+               System.out.println( "StatementList -> Statement" );
+         :};
+
+Statement ::= CaseStatement
+		{:
+         System.out.println( "Statement -> CaseStatement" );
+      :}
+      | ID ASSIGN Expression SEMICOLON
+      {:
+         System.out.println( "Statement -> ID = Expression ;" );
+      :}
+      | Block
+      {:
+         System.out.println( "Statement -> Block" );
+      :};
+      // | ID ASSIGN Expression error
+      // {:
+      //    System.out.println("Missing ; in assignment");
+      //    parser.errCount++;
+      // :}
+      // | ID error
+      // {:
+      //    System.out.println("Missing = in asigment");
+      //    parser.errCount++;
+      // :}
+      // | error
+      // {:
+      //    System.out.println("Missing identificator in assignment");
+      //    parser.errCount++;
+      // :};
+
+CaseStatement ::= CASE LEFTPAR Expression RIGHTPAR LEFTBRACKET WhenStatementList RIGHTBRACKET
+   {:
+      System.out.println( "CaseStatement -> case ( Expression ) { WhenStatementList }" );
+   :};
+   // | CASE LEFTPAR Expression RIGHTPAR LEFTBRACKET WhenStatementList error
+   // {:
+   //    System.out.println("Missing } in case statement");
+   //    parser.errCount++;
+   // :}
+   // | CASE LEFTPAR Expression RIGHTPAR error
+   // {:
+   //    System.out.println("Missing { in case statement");
+   //    parser.errCount++;
+   // :}
+   // | CASE LEFTPAR Expression error
+   // {:
+   //    System.out.println("Missing ) in case statement");
+   //    parser.errCount++;
+   // :}
+   // | CASE error
+   // {:
+   //    System.out.println("Missing ( in case statement");
+   //    parser.errCount++;
+   // :}
+   // | error
+   // {:
+   //    System.out.println("Missing case keyword in case statement");
+   //    parser.errCount++;
+   // :};
+
+WhenStatementList ::= WhenStatementList WhenStatement
+	{:
+      System.out.println( "WhenStatementList -> WhenStatementList WhenStatement" );
+   :}
+	| WhenStatement
+	{:
+      System.out.println( "WhenStatementList -> WhenStatement" );
+   :};
+
+WhenStatement ::= WHEN CONST COLON Statement
+	{:
+      System.out.println( "WhenStatement -> when CONST : Statement" );
+   :}
+   | WHEN CONST error
+   {:
+      System.out.println("Missing ; in case statement");
+      parser.errCount++;
+   :}
+   | WHEN error
+   {:
+      System.out.println("Missing constant in case statement");
+      parser.errCount++;
+   :}
+   | error
+   {:
+      System.out.println("Missing when keyword in when statement");
+      parser.errCount++;
+   :};
+
+Expression ::= Expression AddOperator Term
+	{:
+      System.out.println( "Expression -> Expression AddOperator Term" );
+   :}
+   | Term
+   {:
+      System.out.println( "Expression -> Term" );
+   :};
+
+AddOperator ::= PLUS
+   {:
+      System.out.println( "AddOperator -> +" );
+   :}
+   | MINUS
+   {:
+      System.out.println( "AddOperator -> -" );
+   :};
+
+Term ::= ID
+   {:
+      System.out.println( "Term -> ID" );
+   :}
+   | CONST
+   {:
+      System.out.println( "Term -> CONST" );
+   :}
+   | LEFTPAR Expression RIGHTPAR
+   {:
+      System.out.println( "Term -> ( Expression )" );
+   :};

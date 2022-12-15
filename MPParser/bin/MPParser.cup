@@ -1,0 +1,176 @@
+//import sekcija
+
+import java_cup.runtime.*;
+import java.io.*;
+
+parser code {:
+   public static void main( String[] args )
+   {
+      try
+	  {
+		   FileReader file = new FileReader( args[0] );
+		   Scanner scanner = new MPLexer( file );
+		   MPParser parser = new MPParser( scanner );
+		   parser.parse();
+	  }
+	  catch( Exception e )
+	  {
+		   e.printStackTrace();
+	  }
+   }
+:};
+
+
+//Terminali
+terminal PROGRAM, VAR, INTEGER, CHAR, BEGIN, END, READ, WRITE, IF, THEN, ELSE;
+terminal ID, CONST, PLUS, MUL, LEFTPAR, RIGHTPAR, COLON, ASSIGN, SEMI, COMMA, DOT;
+
+//Neterminali
+non terminal Program, NizImena, DeklProm, Blok, NizDekl, Deklaracija, Tip, NizNar, Naredba;
+non terminal Ulaz, Izlaz, Dodela, Izraz, PIzraz, FIzraz, IfNar;
+
+
+//Gramatika
+Program ::= PROGRAM LEFTPAR NizImena RIGHTPAR SEMI DeklProm Blok DOT 
+            {:
+               System.out.println( "Redukcija po smeni 1." );
+            :};
+
+DeklProm ::= VAR NizDekl
+             {:
+                System.out.println( "Redukcija po smeni 2." );
+             :};
+
+NizDekl ::= NizDekl Deklaracija 
+            {:
+               System.out.println( "Redukcija po smeni 3." );
+            :}
+          | Deklaracija
+            {:
+               System.out.println( "Redukcija po smeni 4." );
+            :}
+          ;
+
+Deklaracija ::= NizImena COLON Tip
+                {:
+                   System.out.println( "Redukcija po smeni 5." );
+                :};
+
+NizImena ::= NizImena COMMA ID
+             {:
+                System.out.println( "Redukcija po smeni 6." );
+             :} 
+           | ID
+             {:
+                System.out.println( "Redukcija po smeni 7." );
+             :}
+           ;
+
+Tip ::= INTEGER 
+        {:
+           System.out.println( "Redukcija po smeni 8." );
+        :}
+      | CHAR
+        {:
+           System.out.println( "Redukcija po smeni 9." );
+        :}
+      ;
+
+Blok ::= BEGIN NizNar END
+         {:
+            System.out.println( "Redukcija po smeni 10." );
+         :};
+
+NizNar ::= NizNar SEMI Naredba 
+           {:
+              System.out.println( "Redukcija po smeni 11." );
+           :}
+         | Naredba
+           {:
+              System.out.println( "Redukcija po smeni 12." );
+           :}
+         ;
+
+Naredba ::= Ulaz
+            {:
+               System.out.println( "Redukcija po smeni 13." );
+            :}
+          | Izlaz 
+            {:
+               System.out.println( "Redukcija po smeni 14." );
+            :}
+          | Dodela
+            {:
+               System.out.println( "Redukcija po smeni 15." );
+            :}
+          | Blok
+            {:
+               System.out.println( "Redukcija po smeni 16." );
+            :}
+          | IfNar
+            {:
+               System.out.println( "Redukcija po smeni 17." );
+            :}
+          ;
+
+Ulaz ::= READ LEFTPAR ID RIGHTPAR
+         {:
+            System.out.println( "Redukcija po smeni 18." );
+         :};
+
+Izlaz ::= WRITE LEFTPAR Izraz RIGHTPAR
+          {:
+             System.out.println( "Redukcija po smeni 19." );
+          :};
+
+Dodela ::= ID ASSIGN Izraz
+           {:
+              System.out.println( "Redukcija po smeni 20." );
+           :};
+
+Izraz ::= Izraz PLUS PIzraz 
+          {:
+             System.out.println( "Redukcija po smeni 21." );
+          :}
+        | PIzraz
+          {:
+             System.out.println( "Redukcija po smeni 22." );
+          :}
+        ;
+
+PIzraz ::= PIzraz MUL FIzraz
+           {:
+              System.out.println( "Redukcija po smeni 23." );
+           :}
+         | FIzraz
+           {:
+              System.out.println( "Redukcija po smeni 24." );
+           :}
+         ;
+
+FIzraz ::= ID
+           {:
+              System.out.println( "Redukcija po smeni 25." );
+           :}
+         | CONST
+           {:
+              System.out.println( "Redukcija po smeni 26." );
+           :}
+         | LEFTPAR Izraz RIGHTPAR
+           {:
+              System.out.println( "Redukcija po smeni 27." );
+           :}
+         ;
+
+IfNar ::= IF Izraz THEN Naredba ELSE Naredba
+          {:
+             System.out.println( "Redukcija po smeni 28." );
+          :};
+
+
+	
+
+
+
+
+
