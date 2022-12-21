@@ -1,0 +1,47 @@
+SE -> self
+SE -> self.id
+SE -> self[EL]
+SE -> self.init
+EL -> E
+EL -> E, EL
+E -> id
+E -> const
+E -> SE
+
+SE -> self SE'
+SE' -> .id
+SE' -> [EL]
+SE' -> .init
+SE' -> e
+EL -> E
+EL -> E, EL
+E -> id
+E -> const
+E -> SE
+
+SE -> self SE'
+SE' -> .SE''
+SE' -> [EL]
+SE' -> e
+SE'' -> id
+SE'' -> init
+EL -> E EL'
+EL' -> , EL
+EL' -> e
+E -> id
+E -> const
+E -> SE
+
+FOLLOW(SE'):
+	FOLLOW(SE) <= FOLLOW(SE') => { # } <= FOLLOW(SE'),
+	FOLLOW(E) <= FOLLOW(SE)
+=>	FIRST(EL') <= FOLLOW(E)
+=>	{ , } <= FOLLOW(E)
+=> 	FOLLOW(SE') = { , # }
+
+FOLLOW(EL'):
+	FOLLOW(EL) <= FOLLOW(EL') => { ] } <= FOLLOW(EL')
+=>	FOLLOW(EL') = { ] }
+
+FIRST(SE) = { self }
+	

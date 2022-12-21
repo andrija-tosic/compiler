@@ -1,0 +1,10 @@
+terminal COMMA, ID, ASSIGN, CONST, ASTERISK;
+
+non terminal A, AL, T;
+
+AL ::= AL COMMA A
+    |  AL COMMA error
+    |  AL error
+    |  A
+    |  error
+

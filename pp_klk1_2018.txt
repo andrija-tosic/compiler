@@ -1,0 +1,4 @@
+SelfExpression -> self | self.id | self[ExpressionList] | self.init
+ExpressionList -> Expression | Expression, ExpressionList
+Expression -> id | const | SelfExpression
+

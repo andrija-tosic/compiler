@@ -1,24 +1,29 @@
+%% Izostavljanje main-a uzrokuje gresku. %%
+%% Izostavljanje '(' ili ')' iza main-a uzrokuje gresku. %%
 main() {
     int a, b, c;
     char a1, _b2, c3_;
     float x1, y2, z3;
 
-    %% dodela na z odmah uzrokuje gresku %%
-
+    %% Dodela promenljivoj pri deklaraciji uzrokuje gresku. %%
     char z;
 
     br = 0hex123ABCDEF;
 
     u = 0oct1267;
 
-    %% izostavljanje izraza iz case uzrokuje gresku %%
-
+    %% Izostavljanje izraza iz case statement-a uzrokuje gresku. %%
+    %% Izostavljanje '{' iz case statement-a uzrokuje gresku. %%
     case (a) {
+        %% Izostavljanje konstante nakon when kljucne reci uzrokuje gresku. %%
+        %% Izostavljanje izraza nakon when statement-a uzrokuje gresku. %%
         when 1: br = 0dec10;
+        %% Izostavljanje ':' na kraju when statement-a uzrokuje gresku. %%
         when 2.3: br = 100;
         when 'c': br = 1000;
     }
 
+    %% Nevalidne vrednosti koje se dodeljuju pri dodeli uzrokuju gresku. %%
     a = b + c;
-    a1 = b2 - c3;
+    a1 = _b2 - c3_;
 }

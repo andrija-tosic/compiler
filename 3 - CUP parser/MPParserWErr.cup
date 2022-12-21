@@ -256,7 +256,7 @@ WhenStatement ::= WHEN CONST COLON Statement
    :}
    | WHEN CONST error
    {:
-      System.out.println("Missing ; in case statement");
+      System.out.println("Missing : in case statement");
       parser.errCount++;
    :}
    | WHEN error

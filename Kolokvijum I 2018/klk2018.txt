@@ -1,0 +1,103 @@
+P -> id ( PL )
+P -> id
+P -> const
+PL -> P
+PL -> PL, P
+
+1 P -> id P'
+2 P -> const
+3 P' -> ( PL )
+4 P' -> e
+5 PL -> P PL'
+6 PL' -> , P PL'
+7 PL' -> e
+
+FIRST(1) & FIRST(2) = { #, id } & { const } = 0
+
+FIRST(3) & FIRST(4) = { ( } & { e, #, , } = 0
+
+FOLLOW(P') = { #, , }
+FOLLOW(P) <= FOLLOW(P')
+FIRST(PL') <= FOLLOW(P)
+{ , } <= FOLLOW(P)
+
+
+FIRST(6) & FIRST(7) = { , } & { e, ) } = 0
+FOLLOW(PL') = { ) }
+FOLLOW(PL) <= FOLLOW(PL')
+FOLLOW(PL) = { ) }
+
+
+1 P -> id ( PL )
+2 P -> id
+3 P -> const
+4 PL -> P
+5 PL -> PL, P
+
+l0:
+	P' -> .P
+	P -> .id ( PL ) /
+	P -> .id /
+	P -> .const /
+
+l1 = goto(l0, id)
+	P -> id. ( PL ) /
+	P -> id. [r2]
+
+	FOLLOW(P) = { #, , }
+	FOLLOW(PL) <= FOLLOW(P)
+	FOLLOW(PL) = { , }
+
+l2 = goto(l1, ():
+	P -> id ( .PL ) /
+	PL -> .P /
+	PL -> .PL, P /
+
+	P -> .id ( PL ) /
+	P -> .id /
+	P -> .const /
+
+l3 = goto(l2, PL):
+	P -> id ( PL. ) /
+	PL -> PL., P /
+
+l4 = goto(l3, )):
+	P -> id ( PL ). [r1]
+
+	FOLLOW(P) = { #, , }
+	FOLLOW(PL) <= FOLLOW(P)
+	FOLLOW(PL) = { , }
+
+l5 = goto(l3, ,):
+	PL -> PL, .P /
+	P -> .id ( PL ) /
+	P -> .id /
+	P -> .const /
+
+
+l6 = goto(l5, P):
+	PL -> PL, P. [r5]
+
+	FOLLOW(PL) = { , }
+
+l7 = goto(l2, P):
+	PL -> P. [r4]
+
+	FOLLOW(PL) = { , }
+
+l8 = goto(l0, const):
+	P -> const. [r3]
+
+	FOLLOW(P) = { #, , }
+	FOLLOW(PL) <= FOLLOW(P)
+	FOLLOW(PL) = { , }
+
+l9 = goto(l0, P):
+	P' -> P. [acc]
+
+l1 = goto(l2, id)
+l1 = goto(l5, id)
+
+l8 = goto(l2, const)
+l8 = goto(l5, const)
+

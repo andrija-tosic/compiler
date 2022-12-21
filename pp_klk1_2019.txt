@@ -1,0 +1,130 @@
+1 ArgumentList -> Argument
+2 ArgumentList -> ArgumentList, Argument
+3 Argument -> Type id
+4 Argument -> Type id = const
+5 Type -> Type *
+6 Type -> id 
+
+1 AL -> A
+2 AL -> AL, A
+3 A -> T id
+4 A -> T id = const
+5 T -> T *
+6 T -> id
+
+1 AL -> A AL'
+2 AL' -> , A AL'
+3 AL' -> e
+4 A -> T id A'
+5 A' -> = const
+6 A' -> e
+7 T -> id T'
+8 T' -> * T'
+9 T' -> e
+
+1 FIRST(A AL') = { id }
+2 FIRST(, A AL') = { , }
+3 FIRST(e) = { e }
+  FOLLOW(AL') = { # }
+4 FIRST(T id A') = { id }
+5 FIRST(= const) = { = }
+6 FIRST(e) = { e }
+  FOLLOW(A') = { #, , }
+
+  FOLLOW(A) <= FOLLOW(A')
+  FIRST(AL') <= FOLLOW(A)
+  { , } <= FOLLOW(A)
+  FOLLOW(AL) <= FOLLOW(A)
+  { # } <= FOLLOW(A)
+
+7 FIRST(id T') = { id }
+8 FIRST(* T') = { * }
+9 FIRST(e) = { e }
+9 FOLLOW(T') = { id }
+  FOLLOW(T) <= FOLLOW(T')
+  { id } <= FOLLLOW(T')
+
+Provera LL1
+
+(2, 3):
+FIRST(, A AL') presek FIRST(e) presek FOLLOW(AL') = prazan skup
+
+(5, 6):
+FIRST(= const) presek FIRST(e) presek FOLLOW(A') = prazan skup
+
+(8, 9):
+FIRST(* T') presek FIRST(e) presek FOLLOW(T') = prazan skup
+
+LR:
+
+1 AL -> A
+2 AL -> AL, A
+3 A -> T id
+4 A -> T id = const
+5 T -> T *
+6 T -> id
+
+l0:	AL' -> .AL /
+	AL -> .A
+	AL -> .AL, A /
+	A -> .T id /
+	A -> .T id = const /
+	T -> .T * /
+	T -> .id /
+
+l1 = goto(l0, AL):
+	AL' -> AL. [acc]
+	AL -> AL., A
+
+l2 = goto(l1, ,):
+	AL -> AL, .A /
+	A -> .T id /
+	A -> .T id = const /
+	T -> .T * /
+	T -> .id /
+
+l3 = goto(l2, A):
+	AL -> AL, A. [r2]
+
+	FOLLOW(AL) = { #, , }
+
+l4 = goto(l2, T):
+	A -> T. id /
+	A -> T. id = const /
+	T -> T. * /
+
+l5 = goto(l4, id):
+	A -> T id. [r3]
+	A -> T id. = const /
+
+	FOLLOW(A) = { #, , }
+
+l6 = goto(l5, =):
+	A -> T id =. const /
+
+l7 = goto(l6, const):
+	A -> T id = const. [r4]
+
+	FOLLOW(A) = { #, , }
+=>	FOLLOW(AL) <= FOLLOW(A)
+=>	{ , } <= FOLLOW(A)
+
+
+l8 = goto(l4, *):
+	T -> T *. [r5]
+
+	FOLLOW(T) = { id, * }
+
+l9 = goto(l2, id):
+	T -> id. [r6]
+
+	FOLLOW(T) = { id, * }
+
+
+l10 = goto(l0, A):
+	AL -> A. [r1]
+
+	FOLLOW(AL) = { #, , }
+
+l4 = goto(l0, T)
+l9 = goto(l0, id)

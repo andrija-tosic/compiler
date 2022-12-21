@@ -58,65 +58,38 @@ Separator (
 Separator )
 Term -> ID
 Expression -> Term
-Separator {
 when
 Dec
 Separator :
 Separator =
 Dec
 Separator ;
+Missing { in case statement
+Statement -> CaseStatement
+StatementList -> StatementList Statement
 Term -> CONST
 Expression -> Term
 when
 Statement -> ID = Expression ;
-WhenStatement -> when CONST : Statement
-WhenStatementList -> WhenStatement
 Float
 Separator :
 Separator =
 Dec
 Separator ;
-Term -> CONST
-Expression -> Term
 when
-Statement -> ID = Expression ;
-WhenStatement -> when CONST : Statement
-WhenStatementList -> WhenStatementList WhenStatement
 char
 Separator :
 Separator =
 Dec
 Separator ;
-Term -> CONST
-Expression -> Term
 Separator }
-Statement -> ID = Expression ;
-WhenStatement -> when CONST : Statement
-WhenStatementList -> WhenStatementList WhenStatement
-CaseStatement -> case ( Expression ) { WhenStatementList }
-Statement -> CaseStatement
-StatementList -> StatementList Statement
 Separator =
 Plus
-Term -> ID
-Expression -> Term
-AddOperator -> +
 Separator ;
-Term -> ID
-Expression -> Expression AddOperator Term
-Statement -> ID = Expression ;
-StatementList -> StatementList Statement
 Separator =
 Minus
-Term -> ID
-Expression -> Term
-AddOperator -> -
 Separator ;
-Term -> ID
-Expression -> Expression AddOperator Term
 Separator }
-Statement -> ID = Expression ;
-StatementList -> StatementList Statement
-Block -> { Declarations StatementList }
+Missing } at end of block
 Program -> main ( ) Block
-Syntax analysis done. No errors encountered.
+Syntax analysis done. Error count: 2
