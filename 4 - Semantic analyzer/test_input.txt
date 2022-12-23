@@ -15,6 +15,29 @@ main() {
         b = 5;
     }
 
+    {
+        int x;
+
+        x = 20;
+    }
+
+    {
+        int x;
+
+        x = 30;
+    }
+
+    {
+        int x;
+
+        {
+            int x;
+            x = 40;
+        }
+
+        x = 30;
+    }
+
 
     %% Komentar pred case statement %%
 
