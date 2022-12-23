@@ -1,0 +1,342 @@
+// import sekcija
+
+import java_cup.runtime.*;
+import java.io.*;
+import java.util.*;
+
+import SymbolTable.*;
+
+parser code {:
+
+   public int errNo = 0;
+   public int warnNo = 0;
+   
+   SymbolTable symbolTable;
+
+   public static void main( String[] args ) {
+      try {
+		   FileReader file = new FileReader(args[0]);
+		    java_cup.runtime.Scanner scanner = new MPLexer( file );
+		   MPParser parser = new MPParser( scanner );
+		   parser.parse();
+		   parser.checkWarnings();
+		   if ( parser.errNo == 0 && parser.warnNo == 0 )
+            System.out.println("Syntax analysis done.");
+         else
+            System.out.println("Syntax analysis done.\n"
+            + "Number of errors: "
+            + parser.errNo
+            + "\nnumber of warnings: "
+            + parser.warnNo + "\n");
+	  }
+	  catch( Exception e )
+	  {
+		   e.printStackTrace();
+	  }
+   }
+      public void checkWarnings()
+   {
+      SymbolNode current = symbolTable.getVariables();
+      while ( current != null )
+      {
+      	Variable var = ( Variable ) current;
+      	if ( var.last_def == -1 && var.last_use == -1 )
+      	{
+      		System.out.println("Upozorenje: Promenljiva " + var.name + 
+      			" je deklarisana, ali se nigde ne koristi.");
+      		warnNo++;
+      	}
+      	else if ( var.last_def > var.last_use )
+      	{
+      		System.out.println("Upozorenje: Vrednost dodeljena promeljivoj " +
+      		    var.name + " u liniji " + var.last_def + " se nigde ne koristi.");
+      		warnNo++;
+      	}
+      	current = current.next;
+     }
+   }
+
+ 	public int getLine()
+ 	{
+ 		return (( MPLexer) getScanner()).getLine();
+ 	}
+
+	public int getLevel()
+	{
+		return (( MPLexer) getScanner()).getLevel();
+	}
+
+	public void incrementLevel() {
+		(( MPLexer) getScanner()).incrementLevel();
+	}
+
+   public void decrementLevel() {
+		(( MPLexer) getScanner()).decrementLevel();
+	}
+:};
+
+init with {:
+	symbolTable = new SymbolTable();
+:}
+
+// Terminali
+terminal MAIN, LEFTPAR, RIGHTPAR, LEFTBRACKET, RIGHTBRACKET, SEMICOLON, CASE;
+terminal INT, CHAR, FLOAT, COMMA, ASSIGN, WHEN, COLON, PLUS, MINUS;
+
+terminal String ID;
+terminal Integer INTCONST;
+terminal Character CHARCONST;
+terminal Float FLOATCONST;
+
+// Neterminali
+non terminal Program;
+non terminal Block;
+non terminal Declarations;
+non terminal StatementList;
+non terminal VarDecl;
+non terminal Statement;
+non terminal CaseStatement;
+non terminal AddOperator;
+
+non terminal Type Expression, Term, Type, WhenStatement, WhenStatementList;
+non terminal ArrayList NameList;
+non terminal Constant Constant;
+
+start with Program;
+
+// Gramatika
+Program ::= MAIN LEFTPAR RIGHTPAR Block
+			{:
+            System.out.println("Program -> main ( ) Block");
+         :};
+
+Block ::= LEFTBRACKET Declarations StatementList RIGHTBRACKET
+			{:
+			   parser.symbolTable.removeVarsByLevel(parser.getLevel());
+           	parser.decrementLevel();
+            System.out.println("Block -> { Declarations StatementList }");
+         :};
+
+Declarations ::= Declarations VarDecl
+			{:
+               System.out.println("Declarations -> Declarations VarDecl");
+         :}
+         |
+         {:
+               parser.incrementLevel();
+               System.out.println("Declarations -> ε");
+         :};
+
+VarDecl ::= Type:t NameList:niz SEMICOLON
+			{:
+               for ( int i = 0; i < niz.size(); i++ ) {
+                  String ime = (String) niz.get(i);
+                  if ( ! parser.symbolTable.addVar(ime, parser.getLevel(), t) ) {
+                     System.out.println("******************************************************************************************************************");
+                     System.out.println("Greska u liniji " + parser.getLine() + ": " +
+                     "Promenljiva " + ime + " je vec deklarisana u toj ili nekoj od spoljasnjih oblasti vazenja.");
+                     System.out.println("******************************************************************************************************************");
+                     
+                     parser.errNo++;
+                  }
+               } 
+
+               System.out.println("VarDecl -> Type NameList ;");
+         :};
+
+NameList ::= ID:ime
+		   {:
+            RESULT = new ArrayList();
+            RESULT.add(ime);
+            System.out.println("NameList -> ID");
+         :}
+         | NameList:niz COMMA ID:ime
+         {:
+            RESULT = niz;
+            RESULT.add(ime);
+            System.out.println("NameList -> NameList , ID");
+         :};
+
+Type ::= INT
+		{:
+         RESULT = parser.symbolTable.getType("int");
+         System.out.println("Type -> int");
+      :}
+		| CHAR
+		{:
+         RESULT = parser.symbolTable.getType("char");
+         System.out.println("Type -> char");
+      :}
+      | FLOAT
+      {:
+         RESULT = parser.symbolTable.getType("float");
+         System.out.println("Type -> float");
+      :};
+
+StatementList ::= StatementList Statement
+		{:
+         System.out.println("StatementList -> StatementList Statement");
+      :}
+		| Statement
+		{:
+         System.out.println("StatementList -> Statement");
+      :};
+
+Statement ::= CaseStatement
+		{:
+         System.out.println("Statement -> CaseStatement");
+      :}
+      | ID:id ASSIGN Expression:expr SEMICOLON
+      {:
+         Variable var = parser.symbolTable.getVar(id);
+			if (var == null) {
+            System.out.println("******************************************************************************************************************");
+				System.out.println("Greska u liniji " + parser.getLine() + ": promenljiva " + id + " nije deklarisana.");
+            System.out.println("******************************************************************************************************************");
+				
+            parser.errNo++;
+			}
+         else {
+            // float > int > char
+            if (var.type.tkind == Type.CHAR && (expr.type.tkind != Type.CHAR)) {
+               System.out.println("******************************************************************************************************************");
+               System.out.println("Greska u liniji " + parser.getLine() + ": " + "Promenljivoj char tipa se moze dodeliti samo promenljiva char tipa");
+               System.out.println("******************************************************************************************************************");
+               
+               parser.errNo++; 
+            }
+            else if (var.type.tkind == Type.INT && (expr.type.tkind == Type.FLOAT)) {
+               System.out.println("******************************************************************************************************************");
+               System.out.println("Greska u liniji " + parser.getLine() + ": " + "Ne moze se float dodeliti promenljivoj int tipa");
+               System.out.println("******************************************************************************************************************");
+         
+               parser.errNo++; 
+            }
+            
+            System.out.println("Statement -> ID = Expression ;");
+         }
+
+      :}
+      | Block
+      {:
+         System.out.println("Statement -> Block");
+      :};
+
+CaseStatement ::= CASE LEFTPAR Expression:t RIGHTPAR LEFTBRACKET WhenStatementList:wsl RIGHTBRACKET
+   {:
+      if (!(t.tkind == Type.INT || t.tkind == Type.CHAR)) {
+         System.out.println("******************************************************************************************************************");
+         System.out.println("Greska u liniji " + parser.getLine() 
+         + ": Izraz u case naredbi moze samo biti tipa int ili tipa char.");
+         System.out.println("******************************************************************************************************************");
+
+         parser.errNo++;
+      }
+
+      if (t.tkind != wsl.tkind) {
+         System.out.println("******************************************************************************************************************");
+         System.out.println("Greska u liniji " + parser.getLine() 
+         + ": Konstanta u when naredbi mora biti istog tipa kao izraz u odgovarajucoj case naredbi");
+         System.out.println("******************************************************************************************************************");
+
+         parser.errNo++;
+      }
+
+      System.out.println("CaseStatement -> case ( Expression ) { WhenStatementList }");
+   :};
+
+WhenStatementList ::= WhenStatementList WhenStatement:ws
+	{:
+      RESULT = ws;
+      System.out.println("WhenStatementList -> WhenStatementList WhenStatement");
+   :}
+	| WhenStatement:ws
+	{:
+      RESULT = ws;
+      System.out.println("WhenStatementList -> WhenStatement");
+   :};
+
+WhenStatement ::= WHEN Constant:c COLON Statement
+	{:
+      RESULT = c.type;
+      System.out.println("WhenStatement -> when Constant : Statement");
+   :};
+
+Expression ::= Expression:i1 AddOperator Term:i2
+	{:
+      if (i1.tkind == Type.FLOAT || i2.tkind == Type.FLOAT) {
+         RESULT = parser.symbolTable.getType("float");
+      }
+      else if (i1.tkind == Type.INT || i2.tkind == Type.INT) {
+         RESULT = parser.symbolTable.getType("int");
+      }
+      else {
+         RESULT = parser.symbolTable.getType("char");
+      }
+
+      System.out.println("Expression -> Expression AddOperator Term");
+   :}
+   | Term:t
+   {:
+      RESULT = t;
+      System.out.println("Expression -> Term");
+   :};
+
+AddOperator ::= PLUS
+   {:
+      System.out.println("AddOperator -> +");
+   :}
+   | MINUS
+   {:
+      System.out.println("AddOperator -> -");
+   :};
+
+Term ::= ID:ime
+   {:
+      Variable var = parser.symbolTable.getVar(ime);
+      if ( var == null ) {
+         System.out.println("******************************************************************************************************************");
+         System.out.println("Greska u liniji " + parser.getLine() + ": promenljiva " + ime + " nije deklarisana.");
+         System.out.println("******************************************************************************************************************");
+         RESULT = parser.symbolTable.getType("unknown");
+         parser.errNo++;
+      }
+      else {
+         RESULT = var.type;
+         if ( var.last_def == -1 ) {
+            System.out.println("******************************************************************************************************************");
+            System.out.println("Greska u liniji " + parser.getLine() + ": promenljiva " + ime + " nije inicijalizovana.");
+            System.out.println("******************************************************************************************************************");
+            
+            parser.errNo++;
+         }
+         var.last_use = parser.getLine();
+      }
+
+      System.out.println("Term -> ID");
+   :}
+   | Constant:k
+   {:
+      RESULT = k.type;
+
+      System.out.println("Term -> Constant");
+   :}
+   | LEFTPAR Expression:i RIGHTPAR
+   {:
+      RESULT = i;
+
+      System.out.println("Term -> ( Expression )");
+   :};
+
+Constant ::= INTCONST:c
+   {:
+      RESULT = new Constant(parser.symbolTable.getType("int"), c ); 
+   :}
+   | CHARCONST:c
+   {:
+      RESULT = new Constant(parser.symbolTable.getType("char"), c ); 
+   :}
+   | FLOATCONST:c
+   {:
+      RESULT = new Constant(parser.symbolTable.getType("float"), c ); 
+   :};

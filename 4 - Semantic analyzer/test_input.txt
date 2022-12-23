@@ -1,0 +1,29 @@
+main() {
+    int a, b, c;
+    char a1, _b2, c3_;
+    float x1, y2, z3;
+
+    int a;
+
+    a = 0hex1A2B;
+
+    b = 0oct1267;
+
+    {
+        int b;
+
+        b = 5;
+    }
+
+
+    %% Komentar pred case statement %%
+
+    case (a) {
+        when 1: c = 0dec10;
+        when 2.3: c = 100;
+        when 'c': c = 1000;
+    }
+
+    a = 1.0;
+    a1 = _b2 - c3_;
+}

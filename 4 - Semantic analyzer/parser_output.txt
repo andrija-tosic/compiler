@@ -1,0 +1,140 @@
+main
+Separator (
+Separator )
+Separator {
+int
+Declarations -> ε
+a
+Type -> int
+Separator ,
+NameList -> ID
+b
+Separator ,
+NameList -> NameList , ID
+c
+Separator ;
+NameList -> NameList , ID
+char
+VarDecl -> Type NameList ;
+Declarations -> Declarations VarDecl
+a1
+Type -> char
+Separator ,
+NameList -> ID
+_b2
+Separator ,
+NameList -> NameList , ID
+c3_
+Separator ;
+NameList -> NameList , ID
+float
+VarDecl -> Type NameList ;
+Declarations -> Declarations VarDecl
+x1
+Type -> float
+Separator ,
+NameList -> ID
+y2
+Separator ,
+NameList -> NameList , ID
+z3
+Separator ;
+NameList -> NameList , ID
+a
+VarDecl -> Type NameList ;
+Declarations -> Declarations VarDecl
+Separator =
+0hex1A2B
+Separator ;
+Term -> Constant
+Expression -> Term
+b
+Statement -> ID = Expression ;
+StatementList -> Statement
+Separator =
+0oct1267
+Separator ;
+Term -> Constant
+Expression -> Term
+case
+Statement -> ID = Expression ;
+StatementList -> StatementList Statement
+Separator (
+a
+Separator )
+Term -> ID
+Expression -> Term
+Separator {
+when
+1
+Separator :
+c
+Separator =
+0dec10
+Separator ;
+Term -> Constant
+Expression -> Term
+when
+Statement -> ID = Expression ;
+WhenStatement -> when Constant : Statement
+WhenStatementList -> WhenStatement
+2.3
+Separator :
+c
+Separator =
+100
+Separator ;
+Term -> Constant
+Expression -> Term
+when
+Statement -> ID = Expression ;
+WhenStatement -> when Constant : Statement
+WhenStatementList -> WhenStatementList WhenStatement
+'c'
+Separator :
+c
+Separator =
+1000
+Separator ;
+Term -> Constant
+Expression -> Term
+Separator }
+Statement -> ID = Expression ;
+WhenStatement -> when Constant : Statement
+WhenStatementList -> WhenStatementList WhenStatement
+a
+Izraz u case naredbi može samo biti tipa int ili tipa char.
+CaseStatement -> case ( Expression ) { WhenStatementList }
+Statement -> CaseStatement
+StatementList -> StatementList Statement
+Separator =
+1.0
+Separator ;
+Term -> Constant
+Expression -> Term
+a1
+Greska u liniji 18: vrednost na desnoj strani dodele ne odgovara tipu promenljive a
+Greska u liniji 18: Ne moze se float dodeliti promenljivoj int tipa
+Statement -> ID = Expression ;
+StatementList -> StatementList Statement
+Separator =
+_b2
+Minus
+Greska u liniji 18: promenljiva _b2 nije inicijalizovana.
+Term -> ID
+Expression -> Term
+c3_
+AddOperator -> -
+Separator ;
+Greska u liniji 18: promenljiva c3_ nije inicijalizovana.
+Term -> ID
+Expression -> Expression AddOperator Term
+Separator }
+Statement -> ID = Expression ;
+StatementList -> StatementList Statement
+Block -> { Declarations StatementList }
+Program -> main ( ) Block
+Upozorenje: Vrednost dodeljena promeljivoj a1 u liniji 19 se nigde ne koristi.
+Upozorenje: Vrednost dodeljena promeljivoj c u liniji 15 se nigde ne koristi.
+Upozorenje: Vrednost dodeljena promeljivoj b u liniji 11 se nigde ne koristi.
+Syntax analysis done. Number of errors: 4Number of warnings: + 3
