@@ -1,11 +1,11 @@
 main() {
-    int a, b, c;
+    int b, c;
     char a1, _b2, c3_;
     float x1, y2, z3;
 
-    int a;
+    float a;
 
-    a = 0hex1A2B;
+    a = 1.0;
 
     b = 0oct1267;
 
@@ -18,13 +18,13 @@ main() {
     {
         int x;
 
-        x = 20;
+        x = 0hex20AB;
     }
 
     {
         int x;
 
-        x = 30;
+        x = 0hex30CD;
     }
 
     {
@@ -32,10 +32,10 @@ main() {
 
         {
             int x;
-            x = 40;
+            x = 0hex40EF;
         }
 
-        x = 30;
+        x = 0hex30FF;
     }
 
 
@@ -47,6 +47,5 @@ main() {
         when 'c': c = 1000;
     }
 
-    a = 1.0;
     a1 = _b2 - c3_;
 }

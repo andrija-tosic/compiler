@@ -124,7 +124,7 @@ Declarations ::= Declarations VarDecl
          |
          {:
                parser.incrementLevel();
-               System.out.println("Declarations -> ε");
+               System.out.println("Declarations -> e");
          :};
 
 VarDecl ::= Type:t NameList:niz SEMICOLON
@@ -229,7 +229,7 @@ CaseStatement ::= CASE LEFTPAR Expression:t RIGHTPAR LEFTBRACKET WhenStatementLi
          System.out.println("Greska u liniji " + parser.getLine() 
          + ": Izraz u case naredbi moze samo biti tipa int ili tipa char.");
          System.out.println("******************************************************************************************************************");
-
+         
          parser.errNo++;
       }
 
