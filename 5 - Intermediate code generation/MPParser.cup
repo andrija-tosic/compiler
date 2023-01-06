@@ -1,0 +1,194 @@
+// import sekcija
+
+import java_cup.runtime.*;
+import java.io.*;
+import java.util.*;
+import SymbolTable.*;
+import AST.*;
+
+parser code {:
+ SymbolTable symbolTable;
+:};
+
+init with {:
+ symbolTable = new SymbolTable();
+:}
+
+
+// Terminali
+terminal MAIN, LEFTPAR, RIGHTPAR, LEFTBRACKET, RIGHTBRACKET, SEMICOLON, CASE;
+terminal INT, CHAR, FLOAT, COMMA, ASSIGN, WHEN, COLON;
+
+terminal String ID;
+terminal PLUS, MINUS;
+terminal Integer INTCONST;
+terminal Character CHARCONST;
+terminal Float FLOATCONST;
+
+// Neterminali
+non terminal Block Program;
+non terminal Block Block;
+non terminal Declarations;
+non terminal Block StatementList;
+non terminal VarDecl;
+non terminal Statement Statement;
+non terminal Statement CaseStatement;
+non terminal Symbol AddOperator;
+
+non terminal Expression Expression;
+non terminal Expression Term;
+non terminal Type Type;
+non terminal Statement WhenStatement;
+non terminal ArrayList WhenStatementList;
+non terminal ArrayList NameList;
+non terminal Constant Constant;
+
+start with Program;
+
+// Gramatika
+Program ::= MAIN LEFTPAR RIGHTPAR Block:b
+			{:
+            RESULT = b; 
+         :};
+
+
+Block ::= LEFTBRACKET Declarations StatementList:nn RIGHTBRACKET
+			{:
+            RESULT = nn;
+         :};
+
+Declarations ::= Declarations VarDecl
+			{:
+         :}
+         |
+         {:
+         :};
+
+VarDecl ::= Type:t NameList:niz SEMICOLON
+			{:
+               for ( int i = 0; i < niz.size(); i++ ) {
+                  String ime = (String) niz.get(i);
+                  parser.symbolTable.addVar(ime, t);
+               }
+         :};
+
+NameList ::= ID:ime
+		   {:
+            RESULT = new ArrayList();
+            RESULT.add(ime);
+         :}
+         | NameList:niz COMMA ID:ime
+         {:
+            RESULT = niz;
+            RESULT.add(ime);
+         :};
+
+Type ::= INT
+		{:
+         RESULT = parser.symbolTable.getType("int");
+      :}
+		| CHAR
+		{:
+         RESULT = parser.symbolTable.getType("char");
+      :}
+      | FLOAT
+      {:
+         RESULT = parser.symbolTable.getType("float");
+      :};
+
+StatementList ::= StatementList:nn Statement:n
+		{:
+         RESULT = nn;
+         RESULT.addStatement(n);
+      :}
+		| Statement:n
+		{:
+         RESULT = new Block();
+         RESULT.addStatement(n);
+      :};
+
+Statement ::= CaseStatement:cs
+		{:
+         RESULT = cs;
+      :}
+      | ID:id ASSIGN Expression:expr SEMICOLON
+      {:
+         Variable var = parser.symbolTable.getVar(id);
+
+         RESULT = new Assignment(var, expr);
+      :}
+      | Block:b
+      {:
+         RESULT = b;
+      :};
+
+CaseStatement ::= CASE LEFTPAR Expression:expr RIGHTPAR LEFTBRACKET WhenStatementList:niz RIGHTBRACKET
+   {:
+      RESULT = new CaseStatement(expr, niz);
+   :};
+
+WhenStatementList ::= WhenStatementList:niz WhenStatement:ws
+	{:
+      RESULT = niz;
+      niz.add(ws);
+   :}
+	| WhenStatement:ws
+	{:
+      RESULT = new ArrayList();
+      RESULT.add(ws);
+   :};
+
+WhenStatement ::= WHEN Constant:c COLON Statement:s
+	{:
+      RESULT = new WhenStatement(new ConstantExpression(c), s);
+   :};
+
+Expression ::= Expression:i1 AddOperator:op Term:i2
+	{:
+      if (op.sym == sym.PLUS){
+         RESULT = new Sum(i1, i2);
+      }
+      else {
+         RESULT = new Difference(i1, i2);
+      }
+   :}
+   | Term:t
+   {:
+      RESULT = t;
+   :};
+
+AddOperator ::= PLUS:op
+   {:
+      RESULT = new Symbol(sym.PLUS);
+   :}
+   | MINUS:op
+   {:
+      RESULT = new Symbol(sym.MINUS);
+   :};
+
+Term ::= ID:ime
+   {:
+      Variable var = parser.symbolTable.getVar( ime );
+      RESULT = new VariableExpression(var);
+   :}
+   | Constant:k
+   {:
+      RESULT = new ConstantExpression(k);
+   :}
+   | LEFTPAR Expression:i RIGHTPAR
+   {:
+      RESULT = i;
+   :};
+
+Constant ::= INTCONST:c
+   {:
+      RESULT = new Constant(parser.symbolTable.getType("int"), c ); 
+   :}
+   | CHARCONST:c
+   {:
+      RESULT = new Constant(parser.symbolTable.getType("char"), c ); 
+   :}
+   | FLOATCONST:c
+   {:
+      RESULT = new Constant(parser.symbolTable.getType("float"), c ); 
+   :};

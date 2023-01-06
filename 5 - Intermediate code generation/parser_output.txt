@@ -1,0 +1,73 @@
+main
+Separator (
+Separator )
+Separator {
+int
+a
+Separator ,
+b
+Separator ,
+c
+Separator ;
+char
+a1
+Separator ,
+_b2
+Separator ,
+c3_
+Separator ;
+float
+x1
+Separator ,
+y2
+Separator ,
+z3
+Separator ;
+a
+Separator =
+0hex123ABC
+Separator ;
+b
+Separator =
+0oct1267
+Separator ;
+case
+Separator (
+a
+Separator )
+Separator {
+when
+1
+Separator :
+c
+Separator =
+0dec10
+Separator ;
+when
+2.3
+Separator :
+c
+Separator =
+100
+Separator ;
+when
+'c'
+Separator :
+c
+Separator =
+1000
+Separator ;
+Separator }
+a
+Separator =
+b
+Plus
+c
+Separator ;
+a1
+Separator =
+_b2
+Minus
+c3_
+Separator ;
+Separator }
