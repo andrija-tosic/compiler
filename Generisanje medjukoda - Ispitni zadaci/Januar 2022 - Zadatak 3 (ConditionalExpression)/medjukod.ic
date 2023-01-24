@@ -1,0 +1,36 @@
+IMC<expr1>
+Load_Mem R1, RESULT<expr1>
+Load_Const R2, 0
+
+Compare_Less R1, R2
+JumpIfNotZero R1, expr2Lab
+
+IMC<expr2>
+Load_Mem R1, RESULT<expr2>
+
+Compare_Equal R1, R2
+JumpIfNotZero R1, expr3Lab
+
+IMC<expr3>
+
+Compare_Equal R1, R2
+Load_Mem R1, RESULT<expr3>
+JumpIfNotZero R1, expr4Lab
+
+expr1Lab:
+Load_Mem R1, RESULT<expr1>
+Jump kraj
+
+expr2Lab:
+Load_Mem R1, RESULT<expr2>
+Jump kraj
+
+expr3Lab:
+Load_Mem R1, RESULT<expr3>
+Jump kraj
+
+expr4Lab:
+Load_Mem R1, RESULT<expr4>
+Jump kraj
+
+kraj:

@@ -1,0 +1,19 @@
+IMC<from>
+Load_Mem R1, RESULT<from> ; loop variable
+
+IMC<to>
+Load_Mem R4, RESULT<to>
+
+petlja: 
+Load_Const R2, 0
+Add R2, R1
+
+Compare_Less R2, R4
+JumpIfZero kraj
+IMC<s>
+
+Load_Const R2, 1
+Add R1, R2
+
+Jump petlja
+kraj:

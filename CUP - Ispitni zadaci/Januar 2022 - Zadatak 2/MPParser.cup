@@ -1,0 +1,90 @@
+import java_cup.runtime.*;
+import java.util.*;
+import java.io.*;
+
+import SymbolTable.*;
+
+parser code {:
+    SymbolTable symbolTable;
+    Hashtable<String, Set<String>> userTypes;
+:}
+
+init with {:
+    symbolTable = new SymbolTable();
+    userTypes = new HashSet<>();
+:}
+
+terminal CLASS, SEMICOLON, ASSIGN, OPENBRACKET, CLOSEDBRACKET;
+terminal String ID;
+
+terminal Integer INTCONST;
+terminal Double DOUBLECONST;
+terminal Character CHARCONST;
+
+non terminal Constant Constant;
+
+non terminal ClassDecl;
+non terminal ArrayList MemberList;
+non terminal Member;
+
+ClassDecl ::= CLASS ID:id OPENBRACKET MemberList:ml CLOSEDBRACKET
+{:
+    boolean added = symbolTable.addType(id);
+    
+    if (!added) {
+        // greska
+    }
+
+:}
+
+MemberList ::= Member:m
+{:
+    RESULT = new ArrayList();
+    RESULT.add(m);
+:}
+| MemberList:ml Member:m
+{:
+    for (Member member : ml) {
+        if (member.type.equals(m.type)) {
+            // nije jedinstven ID tipa u klasi, greska
+        }
+    }
+
+    ml.add(m);
+    RESULT = ml;
+:}
+
+Member ::= ID:typeID ID:nameID SEMICOLON
+{:
+    RESULT = new Member(typeID, nameID);
+:}
+| ID:typeID ID:nameID ASSIGN Constant:c SEMICOLON
+{:
+    if (c.type.equals("int") && c.type.equals("char") && c.type.equals("double")) {
+        // greska
+    }
+
+    if (!typeID.equals("int") && !typeID.equals("char") && !typeID.equals("double")) {
+        // greska
+    }
+
+    if (typeID.equals("double") && c.type.equals("int") ||
+        typeID.equals("int") && c.type.equals("char") ||
+        typeID.equals("double") && c.type.equals("char")) {
+
+        RESULT = new Member(typeID, nameID);
+    }
+:}
+
+Constant ::= INTCONST:c
+{:
+    RESULT = new Constant("int", c);
+:}
+| CHARCONST:c
+{:
+    RESULT = new Constant("char", c);
+:}
+| DOUBLECONST:c
+{:
+    RESULT = new Constant("double", c);
+:}

@@ -1,0 +1,12 @@
+petlja:
+IMC<s1>
+IMC<s2>
+...
+IMC<sn>
+
+IMC<exitStatement>
+Load_Mem R1, RESULT<exitStatement>
+JumpIfNotZero R1, kraj
+Jump petlja
+
+kraj:
