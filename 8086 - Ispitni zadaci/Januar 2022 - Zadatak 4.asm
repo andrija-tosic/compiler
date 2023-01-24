@@ -37,14 +37,14 @@ is_busy		[person+6]
 *next		[person+8]
 
 find_delivery stek:
-			result			[bp+12]
-			rest_lat		[bp+10]
-			rest_long		[bp+8]
-			max_distance	[bp+6]
-			*person			[bp+4]
-			IP				[bp+2]
+            result			[bp+12]
+            rest_lat		[bp+10]
+            rest_long		[bp+8]
+            max_distance	[bp+6]
+            *person			[bp+4]
+            IP				[bp+2]
 BP ->		staro BP		[bp]
-			distance		[bp-2]
+            distance		[bp-2]
 SP ->		count			[bp-4]
 
 funkcija:

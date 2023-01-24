@@ -3,17 +3,17 @@ call	verify_preconditions
 
 verify_preconditions:
 Stek:
-		result		bp+6
-		*vr			bp+4
-		IP			bp+2
+        result		bp+6
+        *vr			bp+4
+        IP			bp+2
 BP ->	staro BP	
-		truth		bp-2
+        truth		bp-2
 SP ->	condition	bp-4
 
 vr:
-		type		[vr]
-		*next		[vr+2]
-		query_id	[vr+4]
+        type		[vr]
+        *next		[vr+2]
+        query_id	[vr+4]
 
 Procedura:
 push	bp

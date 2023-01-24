@@ -4,8 +4,8 @@ type	[m+2]
 *next	[m+4]
 
 render_scene stek:
-		*m			[bp+4]
-		IP			[bp+2]
+        *m			[bp+4]
+        IP			[bp+2]
 BP ->	staro BP
 SP ->	loaded		[bp+6]
 
