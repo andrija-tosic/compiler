@@ -51,11 +51,11 @@ funkcija:
 push        bp
 mov         bp, sp
 
-sub         sp, 4                ; za distance i count
+sub         sp, 4                 ; za distance i count
 mov         [bp-4], 0
 
-mov         bx, [bp+4]           ; bx = *person
-mov         ax, [bx+6]           ; ax = person->is_busy
+mov         bx, [bp+4]            ; bx = *person
+mov         ax, [bx+6]            ; ax = person->is_busy
 
 test        ax, ax
 jnz         lab1
@@ -84,29 +84,29 @@ inc         [bp-4]
 lab2:
 lab1:
 
-cmp       [bx+8], 0              ; person->next != 0
-je        lab3
+cmp         [bx+8], 0             ; person->next != 0
+je          lab3
 
-push       ax                    ; za rezultat
-mov        cx, [bp+10]           ; cx = rest_lat
-push       cx
-mov        cx, [bp+8]            ; cx = rest_long
-push       cx
-mov        cx, [bp+6]            ; cx = max_distance
-push       cx
-mov        cx, [bx+8]            ; cx = person->next
-push       cx
-call       find_delivery
-pop        cx                    ; rezultat = cx
-add        cx, [bp-4]            ; cx += count
+push        ax                    ; za rezultat
+mov         cx, [bp+10]           ; cx = rest_lat
+push        cx
+mov         cx, [bp+8]            ; cx = rest_long
+push        cx
+mov         cx, [bp+6]            ; cx = max_distance
+push        cx
+mov         cx, [bx+8]            ; cx = person->next
+push        cx
+call        find_delivery
+pop         cx                    ; rezultat = cx
+add         cx, [bp-4]            ; cx += count
 
-mov        sp, bp
-pop        bp
+mov         sp, bp
+pop         bp
 ret
 
 lab3:
-mov        cx, [bp-4]            ; cx = count
+mov         cx, [bp-4]            ; cx = count
 
-mov        sp, bp
-pop        bp
+mov         sp, bp
+pop         bp
 ret
